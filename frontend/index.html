@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Master | Powerful PDF Tools</title>
+    <meta name="description" content="Every tool you need to work with PDFs in one place. Merge, split, compress, convert, rotate, and more.">
+    <!-- Cache busting parameter added here -->
+    <link rel="stylesheet" href="css/styles.css?v=7">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-brand">
+            <a href="#" class="logo" id="logo-link">
+                <span class="material-symbols-rounded logo-icon">picture_as_pdf</span>
+                <span class="logo-text">PDF Master</span>
+            </a>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+        </div>
+
+        <nav class="main-nav" id="main-nav">
+            <a href="#" class="nav-link" onclick="navigateToTool('merge'); return false;">MERGE PDF</a>
+            <a href="#" class="nav-link" onclick="navigateToTool('merge-word'); return false;">MERGE WORD</a>
+            <a href="#" class="nav-link" onclick="navigateToTool('merge-powerpoint'); return false;">MERGE PPT</a>
+            <a href="#" class="nav-link" onclick="navigateToTool('merge-excel'); return false;">MERGE EXCEL</a>
+            <a href="#" class="nav-link" onclick="navigateToTool('split'); return false;">SPLIT PDF</a>
+            <a href="#" class="nav-link" onclick="navigateToTool('compress'); return false;">COMPRESS PDF</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn nav-link">CONVERT PDF <span class="material-symbols-rounded drop-icon">expand_more</span></button>
+                <div class="dropdown-content">
+                    <div class="dropdown-column">
+                        <h4>Convert to PDF</h4>
+                        <a href="#" onclick="navigateToTool('jpg-to-pdf'); return false;">JPG to PDF</a>
+                        <a href="#" onclick="navigateToTool('word-to-pdf'); return false;">WORD to PDF</a>
+                        <a href="#" onclick="navigateToTool('powerpoint-to-pdf'); return false;">POWERPOINT to PDF</a>
+                        <a href="#" onclick="navigateToTool('excel-to-pdf'); return false;">EXCEL to PDF</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h4>Convert from PDF</h4>
+                        <a href="#" onclick="navigateToTool('pdf-to-jpg'); return false;">PDF to JPG</a>
+                        <a href="#" onclick="navigateToTool('pdf-to-word'); return false;">PDF to WORD</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn nav-link">ALL PDF TOOLS <span class="material-symbols-rounded drop-icon">expand_more</span></button>
+                <div class="dropdown-content mega-menu">
+                    <div class="dropdown-column">
+                        <h4>Organize Documents</h4>
+                        <a href="#" onclick="navigateToTool('merge'); return false;">Merge PDF</a>
+                        <a href="#" onclick="navigateToTool('merge-word'); return false;">Merge Word</a>
+                        <a href="#" onclick="navigateToTool('merge-powerpoint'); return false;">Merge PowerPoint</a>
+                        <a href="#" onclick="navigateToTool('merge-excel'); return false;">Merge Excel</a>
+                        <a href="#" onclick="navigateToTool('split'); return false;">Split PDF</a>
+                        <a href="#" onclick="navigateToTool('organize'); return false;">Organize PDF</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h4>Edit PDF</h4>
+                        <a href="#" onclick="navigateToTool('rotate'); return false;">Rotate</a>
+                        <a href="#" onclick="navigateToTool('add-page-numbers'); return false;">Page Numbers</a>
+                        <a href="#" onclick="navigateToTool('watermark'); return false;">Watermark</a>
+                        <a href="#" onclick="navigateToTool('ocr-text'); return false;">OCR to Text</a>
+                        <a href="#" onclick="navigateToTool('ocr-pdf'); return false;">Make Searchable</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h4>PDF Security</h4>
+                        <a href="#" onclick="navigateToTool('protect'); return false;">Protect</a>
+                        <a href="#" onclick="navigateToTool('unlock'); return false;">Unlock</a>
+                        <a href="#" onclick="navigateToTool('sign'); return false;">Sign</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="header-actions">
+            <span class="material-symbols-rounded header-icon">account_circle</span>
+        </div>
+    </header>
+
+    <main class="main-content" id="main-view">
+        <section class="hero">
+            <h2>Every tool you need to work with PDFs in one place</h2>
+            <p>Every tool you need to use PDFs, at your fingertips. All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+        </section>
+
+        <section class="tools-grid" id="tools-grid">
+            <!-- Tools will be injected here by JS -->
+        </section>
+    </main>
+
+    <!-- Workspace View (Hidden by default) -->
+    <main class="workspace-view hidden" id="workspace-view">
+        <div class="workspace-header">
+            <div class="workspace-nav">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="btn-secondary" id="btn-back" style="display: flex; align-items: center; gap: 4px; padding: 0.5rem 1rem; border: none; background: transparent; cursor: pointer;">
+                        <span class="material-symbols-rounded" style="font-size: 20px;">arrow_back</span>
+                        <strong>Back</strong>
+                    </button>
+                    <span class="material-symbols-rounded breadcrumb-separator" style="font-size: 16px;">arrow_forward</span>
+                    <nav class="breadcrumbs">
+                        <span class="breadcrumb-item" id="breadcrumb-category">Category</span>
+                        <span class="material-symbols-rounded breadcrumb-separator" style="font-size: 16px;">arrow_forward</span>
+                        <span class="breadcrumb-item active" id="breadcrumb-current">Tool Name</span>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="workspace-title-section">
+                <h2 id="workspace-title">Tool Name</h2>
+                <p id="workspace-desc" class="workspace-desc">Tool description here</p>
+            </div>
+        </div>
+
+        <div class="workspace-content">
+            <div class="dropzone" id="dropzone">
+                <span class="material-symbols-rounded dropzone-icon">cloud_upload</span>
+                <h3>Select files</h3>
+                <p>or drop files here</p>
+                <input type="file" id="file-input" multiple hidden>
+                <button class="btn-select" onclick="document.getElementById('file-input').click()">Select files</button>
+                <div id="file-list-container" class="file-list-container hidden">
+                    <div class="file-list-header">
+                        <h4>Selected Files</h4>
+                        <button class="btn-text text-danger" id="btn-clear-all">Clear All</button>
+                    </div>
+                    <div id="file-list" class="file-list"></div>
+                </div>
+            </div>
+
+            <!-- Dynamic Settings Panel -->
+            <div class="settings-panel hidden" id="settings-panel">
+                <div id="dynamic-inputs" class="dynamic-inputs"></div>
+                <button class="btn-primary btn-action" id="btn-execute">
+                    <span id="btn-execute-text">Execute</span>
+                    <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+            </div>
+            
+            <div class="loading-overlay hidden" id="loading-overlay">
+                <div class="spinner"></div>
+                <p>Processing your file...</p>
+            </div>
+            
+            <div class="success-overlay hidden" id="success-overlay">
+                <span class="material-symbols-rounded success-icon">check_circle</span>
+                <h3>Task Complete!</h3>
+                <p>Your file has been processed successfully.</p>
+                <button class="btn-primary btn-download" id="btn-download">Download File</button>
+                <button class="btn-secondary mt-3" id="btn-restart">Process Another File</button>
+            </div>
+            
+            <div class="error-overlay hidden" id="error-overlay">
+                <span class="material-symbols-rounded error-icon">error</span>
+                <h3>Oops! Something went wrong.</h3>
+                <p id="error-message">An error occurred during processing.</p>
+                <button class="btn-secondary mt-3" id="btn-error-back">Try Again</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Main Auth Modal Overlay -->
+    <div id="main-auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-close" onclick="closeAuthModal()">
+                <span class="material-symbols-rounded">close</span>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="auth-tab-login" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" id="auth-tab-register" onclick="switchAuthTab('register')">Register</div>
+            </div>
+            
+            <div id="auth-error-msg" class="auth-error-msg hidden"></div>
+
+            <!-- Login Form -->
+            <form id="form-auth-login" onsubmit="handleLoginRequest(event)">
+                <div class="auth-field">
+                    <label>Username</label>
+                    <input type="text" id="login-username" placeholder="e.g. user1 or admin" required>
+                </div>
+                <div class="auth-field">
+                    <label>Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary auth-submit">Log In</button>
+                <div style="font-size: 0.8rem; color: #94A3B8; margin-top: 1rem; text-align: center;">
+                    Demo Accounts:<br>
+                    <strong>user1</strong> (userpassword123)<br>
+                    <strong>admin</strong> (adminpassword123)
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="form-auth-register" class="hidden" onsubmit="handleRegisterRequest(event)">
+                <div class="auth-field">
+                    <label>Choose Username</label>
+                    <input type="text" id="reg-username" placeholder="Enter username" required>
+                </div>
+                <div class="auth-field">
+                    <label>Choose Password</label>
+                    <input type="password" id="reg-password" placeholder="At least 6 characters" required>
+                </div>
+                <button type="submit" class="btn-primary auth-submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Credits Modal Overlay -->
+    <div id="credits-modal" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width: 480px;">
+            <div class="modal-close" onclick="closeCreditsModal()">
+                <span class="material-symbols-rounded">close</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                <span class="material-symbols-rounded" style="font-size: 32px; color: #3F72AF;">auto_awesome</span>
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: #112D4E;">PDF Master Credits</h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem; color: #112D4E; max-height: 360px; overflow-y: auto; padding-right: 0.5rem;">
+                <div><strong>Lead AI Architect:</strong> Antigravity AI (Google DeepMind)</div>
+                <div><strong>Backend Framework:</strong> FastAPI & Python 3.14</div>
+                <div><strong>Word Merging Engine:</strong> Microsoft Word COM Engine & python-docx / docxcompose</div>
+                <div><strong>PDF Processing:</strong> pypdf, PyMuPDF (fitz), pikepdf & ReportLab</div>
+                <div><strong>Security & Auth:</strong> PyJWT, Bcrypt & HTTPBasic</div>
+                <div><strong>Database Layer:</strong> SQLAlchemy, PyMySQL & SQLite</div>
+                <div><strong>System Metrics:</strong> psutil</div>
+                <div><strong>Frontend Tech:</strong> HTML5, CSS3, ES6 JavaScript</div>
+                <div><strong>Iconography & Fonts:</strong> Material Symbols & Inter by Google Fonts</div>
+                <div><strong>QA Test Suite:</strong> pytest, pytest-asyncio & httpx</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 PDF Master. Built for productivity. | <a href="#" onclick="openCreditsModal(); return false;">Credits</a></p>
+    </footer>
+
+    <!-- Cache busting parameters -->
+    <script src="js/auth.js?v=5"></script>
+    <script src="js/app.js?v=5"></script>
+</body>
+</html>

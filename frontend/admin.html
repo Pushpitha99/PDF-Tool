@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | PDF MASTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --card-bg: #151D2A;
+            --sidebar-bg: #0F172A;
+            --border-color: #232D3F;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent-primary: #6366F1;
+            --accent-hover: #4F46E5;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding-left: 0.5rem;
+        }
+
+        .brand-icon {
+            font-size: 28px;
+            color: var(--accent-primary);
+        }
+
+        .brand-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #818CF8, #C084FC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+        }
+
+        .nav-item.active {
+            font-weight: 600;
+        }
+
+        .user-profile {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #FFF;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            padding: 1.25rem 2rem;
+            background-color: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-primary);
+            color: #FFF;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: #FFF;
+        }
+
+        .btn-danger:hover {
+            background-color: #DC2626;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+
+        .content-body {
+            padding: 2rem;
+        }
+
+        /* Metric Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: var(--sidebar-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-primary);
+            transition: width 0.4s ease;
+        }
+
+        /* Data Tables */
+        .panel-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            background-color: rgba(15, 23, 42, 0.4);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Toast Notifications */
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-primary);
+            color: var(--text-primary);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Login Modal Overlay -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--accent-primary);">lock</span>
+                <h2 style="font-size: 1.25rem; font-weight: 600;">Admin Login</h2>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.5rem;">
+                Please enter your administrator credentials to access the system dashboard.
+            </p>
+            <form id="login-form" onsubmit="handleLoginSubmit(event)">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Username</label>
+                    <input type="text" id="admin-user-input" value="admin" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Password</label>
+                    <input type="password" id="admin-pass-input" value="admin123" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                </div>
+                <div id="login-error-msg" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 1rem;" class="hidden"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.8rem;">
+                    Authenticate & Open Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="material-symbols-rounded brand-icon">admin_panel_settings</span>
+            <span class="brand-text">PDF MASTER</span>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="switchTab('dashboard')">
+                <span class="material-symbols-rounded">dashboard</span>
+                Dashboard
+            </li>
+            <li class="nav-item" onclick="switchTab('storage')">
+                <span class="material-symbols-rounded">folder_zip</span>
+                Storage Manager
+            </li>
+            <li class="nav-item" onclick="switchTab('users')">
+                <span class="material-symbols-rounded">group</span>
+                User Management
+            </li>
+            <li class="nav-item" onclick="switchTab('health')">
+                <span class="material-symbols-rounded">monitor_heart</span>
+                Server Health
+            </li>
+        </ul>
+        <div class="user-profile">
+            <div class="avatar" id="user-avatar">A</div>
+            <div>
+                <div style="font-weight: 600; font-size: 0.9rem;" id="user-display-name">Administrator</div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary);">Authenticated</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="header">
+            <h1 class="header-title" id="page-title">System Overview</h1>
+            <div class="header-actions">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>System Active</span>
+                </div>
+                <button class="btn btn-outline" onclick="fetchMetrics()">
+                    <span class="material-symbols-rounded">refresh</span>
+                    Refresh
+                </button>
+                <button class="btn btn-danger" onclick="triggerCleanup()">
+                    <span class="material-symbols-rounded">cleaning_services</span>
+                    One-Click Clear Storage
+                </button>
+            </div>
+        </header>
+
+        <!-- Body Content -->
+        <div class="content-body">
+            <!-- TAB 1: Dashboard View -->
+            <div id="tab-dashboard">
+                <div class="metrics-grid">
+                    <!-- CPU Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>CPU Utilization</span>
+                            <span class="material-symbols-rounded">memory</span>
+                        </div>
+                        <div class="metric-value" id="val-cpu">0%</div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-cpu" style="width: 0%;"></div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="sub-cpu">Cores: -</div>
+                    </div>
+
+                    <!-- RAM Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>RAM Usage</span>
+                            <span class="material-symbols-rounded">equalizer</span>
+                        </div>
+                        <div class="metric-value" id="val-ram">0%</div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-ram" style="width: 0%; background-color: var(--warning);"></div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="sub-ram">0 MB / 0 MB</div>
+                    </div>
+
+                    <!-- Disk Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>Disk Usage</span>
+                            <span class="material-symbols-rounded">hard_drive</span>
+                        </div>
+                        <div class="metric-value" id="val-disk">0%</div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-disk" style="width: 0%; background-color: var(--success);"></div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="sub-disk">Free: 0 GB</div>
+                    </div>
+
+                    <!-- Temp Storage Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>Temp Storage Consumed</span>
+                            <span class="material-symbols-rounded">folder_open</span>
+                        </div>
+                        <div class="metric-value" id="val-temp-mb">0 MB</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);" id="sub-temp-files">0 Files Pending</div>
+                    </div>
+                </div>
+
+                <!-- Recent Jobs Table -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Active Temporary Processing Jobs</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Size</th>
+                                <th>File Count</th>
+                                <th>Created At</th>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-recent-jobs">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-secondary);">Loading temporary storage records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 2: Storage Manager -->
+            <div id="tab-storage" class="hidden">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Temporary Directories & Cleanup Controls</h2>
+                        <button class="btn btn-danger" onclick="triggerCleanup(0)">
+                            <span class="material-symbols-rounded">delete_forever</span>
+                            Force Purge All Temp Storage
+                        </button>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        Temporary storage holds intermediate uploaded/converted files. Standard maintenance purges files older than 1 hour.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Directory ID</th>
+                                <th>Size (MB)</th>
+                                <th>Files</th>
+                                <th>Creation Timestamp</th>
+                                <th>Age (Minutes)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-full-storage">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-secondary);">No active storage records found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 3: Server Health -->
+            <div id="tab-health" class="hidden">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Microservice Runtime & System Status</h2>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem;">
+                        <div><strong>Backend Framework:</strong> FastAPI (Python Microservice)</div>
+                        <div><strong>Temporary Storage Directory:</strong> <span id="health-temp-dir" style="font-family: monospace;">-</span></div>
+                        <div><strong>Ghostscript / Office Engine Status:</strong> <span class="status-badge">Available</span></div>
+                        <div><strong>Last Refreshed:</strong> <span id="health-last-refreshed">-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: User Management -->
+            <div id="tab-users" class="hidden">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>Total Registered Users</span>
+                            <span class="material-symbols-rounded">group</span>
+                        </div>
+                        <div class="metric-value" id="val-total-users">0</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Database records</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>Active Administrators</span>
+                            <span class="material-symbols-rounded" style="color: var(--accent-primary);">admin_panel_settings</span>
+                        </div>
+                        <div class="metric-value" id="val-admin-count">0</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Full system permissions</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span>Standard Members</span>
+                            <span class="material-symbols-rounded" style="color: var(--success);">person</span>
+                        </div>
+                        <div class="metric-value" id="val-user-count">0</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Standard tool access</div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 class="panel-title">System User Accounts</h2>
+                        <button class="btn btn-primary" onclick="openAddUserModal()">
+                            <span class="material-symbols-rounded">person_add</span>
+                            Add New User
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Role Level</th>
+                                <th>Joined Timestamp</th>
+                                <th>Management Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-users">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-secondary);">Loading registered users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal Overlay -->
+    <div id="add-user-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--accent-primary);">person_add</span>
+                <h2 style="font-size: 1.25rem; font-weight: 600;">Create User Account</h2>
+            </div>
+            <form id="add-user-form" onsubmit="submitAddUser(event)">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Username</label>
+                    <input type="text" id="new-user-name" required placeholder="Enter username" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Password</label>
+                    <input type="password" id="new-user-pass" required placeholder="At least 6 characters" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">Assigned Role</label>
+                    <select id="new-user-role" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                        <option value="user">Standard User</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="button" onclick="closeAddUserModal()" class="btn btn-outline" style="flex: 1; justify-content: center;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal Overlay -->
+    <div id="reset-pass-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--accent-primary);">key</span>
+                <h2 style="font-size: 1.25rem; font-weight: 600;">Reset Password</h2>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.5rem;">
+                Resetting password for user: <strong id="reset-target-username" style="color: var(--text-primary);"></strong>
+            </p>
+            <form id="reset-pass-form" onsubmit="submitResetPassword(event)">
+                <input type="hidden" id="reset-target-id">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">New Password</label>
+                    <input type="password" id="reset-new-pass" required placeholder="Enter new password" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--sidebar-bg); color: var(--text-primary); font-size: 0.95rem;">
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="button" onclick="closeResetPassModal()" class="btn btn-outline" style="flex: 1; justify-content: center;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
